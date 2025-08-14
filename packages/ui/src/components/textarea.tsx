@@ -2,6 +2,17 @@ import * as React from "react"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * A styled wrapper around the native HTML `<textarea>` that applies the project's default input styles.
+ *
+ * This component accepts all standard `<textarea>` props (via `React.ComponentProps<'textarea'>`) and forwards them
+ * to the underlying element. It merges the provided `className` with the component's default Tailwind-based classes
+ * and sets `data-slot="textarea"`.
+ *
+ * @param className - Additional CSS class names to merge with the component's default classes.
+ * @param props - All other standard `<textarea>` props which are forwarded to the underlying element.
+ * @returns A JSX `<textarea>` element with the component's styling and forwarded props.
+ */
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <textarea

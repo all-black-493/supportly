@@ -19,6 +19,14 @@ const alertVariants = cva(
   }
 )
 
+/**
+ * Alert container element with variant-based styling.
+ *
+ * Renders a `div` with `role="alert"` and `data-slot="alert"`, applies classes from `alertVariants`, and forwards all other `div` props.
+ *
+ * @param variant - Visual variant: `"default"` (card background/foreground) or `"destructive"` (error/destructive styling).
+ * @param className - Optional additional class names merged with the computed variant classes.
+ */
 function Alert({
   className,
   variant,
@@ -34,6 +42,15 @@ function Alert({
   )
 }
 
+/**
+ * Renders the Alert title slot used inside an Alert.
+ *
+ * The element uses the "alert-title" data-slot and applies layout and typography classes
+ * (grid column start, line clamping, minimum height, font weight, and tracking). Any
+ * additional `className` is merged and all other div props are forwarded to the element.
+ *
+ * @returns A JSX `div` element representing the alert title.
+ */
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -47,6 +64,16 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders the alert's descriptive content area.
+ *
+ * This component provides the styled container for an alert's description text. It renders a div with
+ * data-slot="alert-description" and applies the component's default typography and layout classes;
+ * any `className` passed in is merged with those defaults.
+ *
+ * @param className - Additional class names to merge with the component's default styles.
+ * @returns A div element intended to contain descriptive content for an Alert.
+ */
 function AlertDescription({
   className,
   ...props

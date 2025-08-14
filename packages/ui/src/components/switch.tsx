@@ -5,6 +5,14 @@ import * as SwitchPrimitive from "@radix-ui/react-switch"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Accessible switch component wrapping Radix UI's Switch primitives.
+ *
+ * Renders a styled toggle control whose visual state (checked/unchecked), focus, disabled and dark-mode variants are driven by Radix `data-state` attributes and the component's CSS classes. All received props are forwarded to `SwitchPrimitive.Root`.
+ *
+ * @param className - Additional CSS classes merged onto the root element.
+ * @returns A React element representing the switch control.
+ */
 function Switch({
   className,
   ...props
