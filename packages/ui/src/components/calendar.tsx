@@ -11,6 +11,22 @@ import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
 import { cn } from "@workspace/ui/lib/utils"
 import { Button, buttonVariants } from "@workspace/ui/components/button"
 
+/**
+ * A styled wrapper around `react-day-picker` that renders the app's calendar UI.
+ *
+ * Renders a DayPicker with opinionated classNames, layout, and component overrides
+ * (custom Root, Chevron icons, DayButton -> `CalendarDayButton`, and WeekNumber).
+ * Supports RTL, month dropdown formatting (short month name), and merging of user
+ * supplied `classNames`, `formatters`, and `components`.
+ *
+ * @param className - Additional container classes applied to the calendar root.
+ * @param classNames - Partial mapping of DayPicker slot classNames to merge with defaults.
+ * @param showOutsideDays - When true, days from adjacent months are shown (default: `true`).
+ * @param captionLayout - Caption layout mode forwarded to DayPicker (default: `"label"`).
+ * @param buttonVariant - Variant prop forwarded to the previous/next nav button styling.
+ * @param formatters - Custom date formatters merged with the default `formatMonthDropdown`.
+ * @param components - Component overrides merged with the built-in custom components.
+ */
 function Calendar({
   className,
   classNames,
@@ -172,6 +188,16 @@ function Calendar({
   )
 }
 
+/**
+ * Custom day button used by the calendar that integrates the app Button and exposes state via data attributes.
+ *
+ * Renders a button for a calendar day that:
+ * - Focuses the underlying button when `modifiers.focused` is true.
+ * - Sets data attributes for the day and range/selection state (`data-day`, `data-selected-single`, `data-range-start`, `data-range-end`, `data-range-middle`) so styling can target these states.
+ * - Applies the project's default DayPicker `day` classNames plus additional state-driven classes and any `className` passed in.
+ *
+ * Accepts the same props as `react-day-picker`'s `DayButton` and forwards them to the underlying `Button`.
+ */
 function CalendarDayButton({
   className,
   day,

@@ -44,6 +44,13 @@ type SidebarContextProps = {
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
 
+/**
+ * Returns the Sidebar context for the nearest SidebarProvider.
+ *
+ * Throws an error if called outside of a SidebarProvider.
+ *
+ * @returns The sidebar context object containing state and controls (e.g., `open`, `setOpen`, `openMobile`, `setOpenMobile`, `isMobile`, `toggleSidebar`, etc.).
+ */
 function useSidebar() {
   const context = React.useContext(SidebarContext)
   if (!context) {
@@ -53,6 +60,20 @@ function useSidebar() {
   return context
 }
 
+/**
+ * Provides sidebar state and controls to descendants and renders the sidebar wrapper.
+ *
+ * The provider manages controlled or uncontrolled open state (desktop) and separate mobile drawer state,
+ * exposes helpers via SidebarContext (state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar),
+ * persists the desktop open/collapsed state to a cookie for 7 days, and registers a global keyboard shortcut
+ * (Ctrl/Cmd + B) to toggle the sidebar.
+ *
+ * @param defaultOpen - Initial open state for uncontrolled usage (desktop). Defaults to `true`.
+ * @param open - Controlled open state (desktop). If provided, the component becomes controlled and `defaultOpen` is ignored.
+ * @param onOpenChange - Callback invoked when the desktop open state changes. If provided, this is used instead of internal state.
+ *
+ * @returns A React element that wraps children with SidebarContext and tooltip plumbing and sets CSS variables for sidebar widths.
+ */
 function SidebarProvider({
   defaultOpen = true,
   open: openProp,
@@ -151,6 +172,23 @@ function SidebarProvider({
   )
 }
 
+/**
+ * Responsive Sidebar layout component that adapts between desktop and mobile.
+ *
+ * Renders a simple static container when `collapsible` is "none", a Sheet-based
+ * mobile sidebar when in mobile mode, and a fixed desktop sidebar with a
+ * gap/container composition otherwise. Uses Sidebar context (useSidebar) to
+ * determine mobile vs. desktop, open state, and derived "expanded"/"collapsed"
+ * state. Emits data attributes (e.g., `data-slot="sidebar"`, `data-state`,
+ * `data-variant`, `data-collapsible`, `data-side`) and CSS variables for widths
+ * to enable styling and transitions.
+ *
+ * @param side - Which side of the viewport the sidebar is anchored ("left" or "right").
+ * @param variant - Visual/layout variant: "sidebar" (default), "floating", or "inset".
+ * @param collapsible - Collapsible behavior: "offcanvas" (hidden when collapsed), "icon" (compact rail), or "none" (not collapsible).
+ *
+ * @returns The sidebar JSX element.
+ */
 function Sidebar({
   side = "left",
   variant = "sidebar",
@@ -253,6 +291,15 @@ function Sidebar({
   )
 }
 
+/**
+ * A compact trigger button that toggles the sidebar open/closed.
+ *
+ * Renders a ghost, icon-sized Button containing a panel icon and a visually-hidden label.
+ * Forwards all props to the underlying Button; if an `onClick` prop is provided it will be
+ * invoked first, then the sidebar toggle from context is executed.
+ *
+ * @returns The sidebar trigger Button element.
+ */
 function SidebarTrigger({
   className,
   onClick,
@@ -279,6 +326,15 @@ function SidebarTrigger({
   )
 }
 
+/**
+ * A compact edge "rail" control that toggles the sidebar.
+ *
+ * Renders a small, edge-aligned button used as a visual handle to open or collapse the sidebar.
+ * The component calls `toggleSidebar` from the sidebar context when clicked, sets an accessible
+ * label/title of "Toggle Sidebar", and is intentionally removed from the tab order (tabIndex = -1).
+ *
+ * Forwards all standard button props (including `className`) to the underlying `<button>`.
+ */
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleSidebar } = useSidebar()
 
@@ -304,6 +360,13 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   )
 }
 
+/**
+ * Inset layout wrapper for the sidebar.
+ *
+ * Renders a <main> element with data-slot="sidebar-inset" and responsive inset-specific classes
+ * (rounded corners, shadow, margin adjustments when the parent sidebar variant is `inset` and when collapsed).
+ * Accepts all standard <main> element props and merges provided `className` with the component classes.
+ */
 function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
     <main
@@ -318,6 +381,14 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   )
 }
 
+/**
+ * Sidebar-scoped wrapper around the base `Input` that applies sidebar-specific attributes and styling.
+ *
+ * Renders an `Input` with `data-slot="sidebar-input"` and `data-sidebar="input"`, a fixed height, full width,
+ * and sidebar-appropriate background and shadow reset. All props accepted by the underlying `Input` are forwarded.
+ *
+ * @returns The rendered input element configured for use inside the sidebar.
+ */
 function SidebarInput({
   className,
   ...props
@@ -332,6 +403,16 @@ function SidebarInput({
   )
 }
 
+/**
+ * Container for the sidebar's header area.
+ *
+ * Renders a div with built-in layout spacing and slotting attributes
+ * (`data-slot="sidebar-header"`, `data-sidebar="header"`) so it can be targeted
+ * by sidebar composition and styling. Accepts all standard `div` props; any
+ * provided `className` is merged with the component's default layout classes.
+ *
+ * @returns A React element representing the sidebar header container.
+ */
 function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -343,6 +424,13 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Footer container for the Sidebar.
+ *
+ * Renders a simple div wired for Sidebar composition (data-slot="sidebar-footer" and data-sidebar="footer")
+ * and applies sidebar-specific spacing. Accepts any standard div props (including `className`) which are merged
+ * with the default layout classes.
+ */
 function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -354,6 +442,15 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Sidebar-specific separator used to visually divide sections within the sidebar.
+ *
+ * Renders the shared Separator component with sidebar-specific data attributes and default styling.
+ * The provided `className` is merged with the component's base classes.
+ *
+ * @param className - Additional class names to apply to the separator.
+ * @returns A Separator element annotated for sidebar slotting and styling.
+ */
 function SidebarSeparator({
   className,
   ...props
@@ -368,6 +465,15 @@ function SidebarSeparator({
   )
 }
 
+/**
+ * Scrollable content container for the Sidebar.
+ *
+ * Renders a div with the sidebar content slot attributes (`data-slot="sidebar-content"`, `data-sidebar="content"`)
+ * and sensible layout/overflow styles. Accepts any standard div props (including `className`) which are merged
+ * into the element. When the sidebar is in the `collapsible="icon"` mode, horizontal overflow is hidden.
+ *
+ * @returns The rendered sidebar content element.
+ */
 function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -382,6 +488,15 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Layout wrapper for grouping related items inside the sidebar.
+ *
+ * Renders a div with sidebar-specific slot/data attributes and vertical spacing.
+ * Accepts any standard div props; `className` is merged with the component's base classes.
+ *
+ * @param props - Additional div props to spread onto the root container.
+ * @returns The sidebar group element.
+ */
 function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -393,6 +508,16 @@ function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Label element for a sidebar group; renders styled text/slot for group headings.
+ *
+ * Renders a div by default or a Radix `Slot` when `asChild` is true (allowing the caller to supply the wrapper element).
+ * For layout and styling it applies sidebar-specific data attributes and classes that respond to collapsible/icon modes.
+ *
+ * @param asChild - If true, render a `Slot` instead of a `div` so the caller's child element becomes the wrapper.
+ * @remarks
+ * All other props are forwarded to the underlying element (e.g., `className`, event handlers, `aria-*` attributes).
+ */
 function SidebarGroupLabel({
   className,
   asChild = false,
@@ -414,6 +539,16 @@ function SidebarGroupLabel({
   )
 }
 
+/**
+ * Action control placed inside a SidebarGroup, typically rendered as a small icon button.
+ *
+ * Renders a positioned, square control (default `<button>`) intended for group-level actions (e.g., edit, more).
+ * It expands the hit area on mobile, is hidden when the sidebar is in `icon` collapsible mode, and accepts
+ * all native button props which are forwarded to the rendered element.
+ *
+ * @param asChild - If true, renders a Radix `Slot` instead of a native `button`, allowing the caller to provide a custom element while preserving styling and behavior.
+ * @returns The sidebar group action element (JSX).
+ */
 function SidebarGroupAction({
   className,
   asChild = false,
@@ -437,6 +572,11 @@ function SidebarGroupAction({
   )
 }
 
+/**
+ * Content container for a sidebar group.
+ *
+ * Renders a full-width div with sidebar-specific data attributes (`data-slot="sidebar-group-content"`, `data-sidebar="group-content"`) and default text sizing. Accepts any standard div props and merges a provided `className` with the component's base classes.
+ */
 function SidebarGroupContent({
   className,
   ...props
@@ -451,6 +591,17 @@ function SidebarGroupContent({
   )
 }
 
+/**
+ * Sidebar menu container for grouping menu items.
+ *
+ * Renders a `<ul>` with `data-slot="sidebar-menu"` and `data-sidebar="menu"`, applies
+ * the sidebar-specific layout classes (`flex`, column flow, gap) and forwards any other
+ * native `<ul>` props to the element. Intended to contain `SidebarMenuItem` / menu-related children.
+ *
+ * @param className - Additional class names to merge with the component's default classes.
+ * @param props - Other native `<ul>` props are forwarded to the rendered element.
+ * @returns A `<ul>` element styled and attributed for use as a sidebar menu.
+ */
 function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
   return (
     <ul
@@ -462,6 +613,13 @@ function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
   )
 }
 
+/**
+ * A wrapper for a sidebar menu item that renders an `<li>` with sidebar-specific data attributes and base classes.
+ *
+ * This component forwards all standard `<li>` props (including `className`) to the rendered element and ensures
+ * the element includes `data-slot="sidebar-menu-item"` and `data-sidebar="menu-item"` attributes used for styling
+ * and composition within the sidebar system.
+ */
 function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
@@ -495,6 +653,24 @@ const sidebarMenuButtonVariants = cva(
   }
 )
 
+/**
+ * Render a styled sidebar menu button, optionally wrapped in a tooltip when the sidebar is collapsed.
+ *
+ * Renders either a native `button` or a Radix `Slot` when `asChild` is true, applies variant/size styles
+ * and data attributes used for sidebar styling, and sets an active state via `data-active`.
+ *
+ * When `tooltip` is provided:
+ * - a string is treated as the tooltip content.
+ * - the button is wrapped in a `Tooltip` with `TooltipTrigger` and `TooltipContent`.
+ * - the tooltip is hidden unless the sidebar state is `"collapsed"` and the UI is not mobile.
+ *
+ * @param asChild - Render a `Slot` instead of a `button` when true.
+ * @param isActive - Marks the button as active (adds `data-active`).
+ * @param variant - Visual variant (passed to the variant system).
+ * @param size - Size token (passed to the variant system).
+ * @param tooltip - Tooltip content or props; if omitted, no tooltip is rendered.
+ * @returns A JSX element for the menu button (optionally wrapped in a tooltip).
+ */
 function SidebarMenuButton({
   asChild = false,
   isActive = false,
@@ -545,6 +721,16 @@ function SidebarMenuButton({
   )
 }
 
+/**
+ * Action control rendered inside a sidebar menu item (positioned top-right).
+ *
+ * Renders either a native `<button>` or a Radix `Slot` when `asChild` is true, and applies the sidebar-specific
+ * data attributes and utility classes used for sizing, accessibility, and hover/focus reveal behavior.
+ *
+ * @param asChild - If true, render a `Slot` so the action can forward props to a child element; otherwise render a `button`.
+ * @param showOnHover - When true, the action is hidden by default on desktop and becomes visible on menu-item hover/focus/active states.
+ * @returns A JSX element to be used as a contextual action within a sidebar menu item.
+ */
 function SidebarMenuAction({
   className,
   asChild = false,
@@ -577,6 +763,16 @@ function SidebarMenuAction({
   )
 }
 
+/**
+ * Small absolute-positioned badge displayed alongside a sidebar menu item.
+ *
+ * Designed to be used within SidebarMenuButton/MenuItem compositions. The badge is non-interactive
+ * (pointer-events-none), adjusts its vertical position based on the menu button size, and is hidden
+ * when the sidebar is in the `icon` collapsible mode.
+ *
+ * All standard <div> props are forwarded to the root element; `className` is merged with the
+ * component's internal classes.
+ */
 function SidebarMenuBadge({
   className,
   ...props
@@ -599,6 +795,16 @@ function SidebarMenuBadge({
   )
 }
 
+/**
+ * Placeholder skeleton for a sidebar menu item used during loading states.
+ *
+ * Renders a horizontal skeleton row with an optional leading icon skeleton and a text skeleton.
+ * The text skeleton receives a randomized width (50%–90%) computed once per mount to make
+ * placeholders appear varied and less uniform.
+ *
+ * @param showIcon - When true, renders a leading icon-sized skeleton. Defaults to `false`.
+ * @remarks This component is purely presentational and has no side effects beyond rendering.
+ */
 function SidebarMenuSkeleton({
   className,
   showIcon = false,
@@ -637,6 +843,18 @@ function SidebarMenuSkeleton({
   )
 }
 
+/**
+ * Renders a styled sub-menu container (an unordered list) used inside the Sidebar.
+ *
+ * This component outputs a <ul> with slot attributes (`data-slot="sidebar-menu-sub"` and
+ * `data-sidebar="menu-sub"`) and sidebar-specific styling. It is hidden automatically
+ * when the sidebar is in the icon-collapsible mode (`group-data-[collapsible=icon]:hidden`).
+ *
+ * Accepts all standard <ul> props (including `className`) which are merged with the
+ * component's base classes.
+ *
+ * @returns The rendered <ul> element for a sidebar sub-menu.
+ */
 function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
   return (
     <ul
@@ -652,6 +870,12 @@ function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
   )
 }
 
+/**
+ * A list item wrapper for a sidebar sub-menu entry.
+ *
+ * Renders an <li> preconfigured with sidebar-specific data attributes and base classes.
+ * Accepts any standard <li> props; `className` will be merged with the component's base classes.
+ */
 function SidebarMenuSubItem({
   className,
   ...props
@@ -666,6 +890,19 @@ function SidebarMenuSubItem({
   )
 }
 
+/**
+ * Sub-menu button used inside a sidebar submenu.
+ *
+ * Renders either an anchor (`a`) or a Radix `Slot` when `asChild` is true. Applies
+ * sidebar-specific sizing, active state styling, truncation for long labels, and
+ * accessibility-friendly focus/disabled handling. Hidden automatically when the
+ * sidebar is in the icon-collapsible mode.
+ *
+ * @param asChild - If true, renders a `Slot` so a child component can control the element rendered.
+ * @param size - Visual size of the button; affects typography (`"sm"` = compact, `"md"` = default).
+ * @param isActive - When true, applies the active background and foreground styles.
+ * @returns A React element representing the styled sub-menu button.
+ */
 function SidebarMenuSubButton({
   asChild = false,
   size = "md",

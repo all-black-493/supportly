@@ -5,6 +5,16 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Thin React wrapper around Radix UI's Separator.Root that renders a horizontal or vertical separator.
+ *
+ * Renders a styled separator element with sensible defaults (horizontal orientation, decorative by default).
+ *
+ * @param className - Optional additional class names to merge with the component's base styling.
+ * @param orientation - Layout of the separator; either `"horizontal"` or `"vertical"`. Defaults to `"horizontal"`.
+ * @param decorative - Whether the separator is decorative (aria-hidden). Defaults to `true`.
+ * @returns A JSX element rendering the configured separator.
+ */
 function Separator({
   className,
   orientation = "horizontal",

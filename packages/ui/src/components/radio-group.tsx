@@ -6,6 +6,16 @@ import { CircleIcon } from "lucide-react"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * A styled wrapper around Radix UI's RadioGroup.Root.
+ *
+ * Renders a Radix RadioGroup root element with a default grid gap layout and
+ * a data-slot of "radio-group". Any additional props (including `className`)
+ * are forwarded to the underlying Radix primitive; provided `className` is
+ * merged with the default "grid gap-3" classes.
+ *
+ * @returns A JSX element rendering the Radix RadioGroup root.
+ */
 function RadioGroup({
   className,
   ...props
@@ -19,6 +29,19 @@ function RadioGroup({
   )
 }
 
+/**
+ * A styled Radix UI radio item used inside RadioGroup.
+ *
+ * Renders a Radix RadioGroup.Item with a circular visual and a centered dot indicator.
+ * Applies a set of default styling classes (focus, disabled, aria-invalid variants, sizing, and transitions)
+ * and merges any provided `className`. All other props are forwarded to the underlying Radix primitive.
+ *
+ * The element includes data-slot attributes for styling hooks:
+ * - `data-slot="radio-group-item"` on the item
+ * - `data-slot="radio-group-indicator"` on the indicator
+ *
+ * @returns A JSX element representing a single radio option.
+ */
 function RadioGroupItem({
   className,
   ...props
