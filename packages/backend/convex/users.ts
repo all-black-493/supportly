@@ -19,6 +19,8 @@ export const add = mutation({
 
         const orgId = identity.orgId as string;
 
+        throw new Error('Tracking Test')
+
         if (!orgId){
             throw new Error("Missing Organization")
         }

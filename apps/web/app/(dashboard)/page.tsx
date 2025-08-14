@@ -8,7 +8,6 @@ import { Button } from "@workspace/ui/components/button"
 
 export default function Page() {
 
-  const users = useQuery(api.users.getMany)
   const addUser = useMutation(api.users.add)
 
   return (
@@ -21,9 +20,6 @@ export default function Page() {
           <Button onClick={() => addUser()}>
             Add User
           </Button>
-          <div className="max-w-sm w-full mx-auto">
-            {JSON.stringify(users, null, 2)}
-          </div>
         </div>
     </>
   )
