@@ -1,31 +1,29 @@
-import { Geist, Geist_Mono } from "next/font/google"
-import { ClerkProvider } from '@clerk/nextjs'
+import { Outfit } from "next/font/google"
+import { ClerkProvider } from "@clerk/nextjs"
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
 
-const fontSans = Geist({
+const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-sans",
-})
-
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+  weight: ["400", "500", "600", "700"],
 })
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
-      >
+    <html
+      lang="en"
+      className={`dark ${outfit.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans antialiased">
         <ClerkProvider>
           <Providers>
-              {children}
+            {children}
           </Providers>
         </ClerkProvider>
       </body>

@@ -3,7 +3,7 @@ import React from 'react'
 const IntegrationsPage = () => {
   return (
     <div>
-      IntegrationsContent
+      Integrations Content
     </div>
   )
 }
