@@ -22,8 +22,6 @@ const formSchema = z.object({
     email: z.string().email("Invalid email address")
 })
 
-const organizationId = "123"
-
 export const WidgetAuthScreen = () => {
 
     const organizationId=useAtomValue(organizationIdAtom)

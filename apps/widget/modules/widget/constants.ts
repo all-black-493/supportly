@@ -9,4 +9,4 @@ export const WIDGET_SCREENS = [
     "contact"
 ] as const;
 
-export const CONTACT_SESSION_KEY = "echo_contact_session";
+export const CONTACT_SESSION_KEY = "supportly_contact_session";

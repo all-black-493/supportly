@@ -7,7 +7,9 @@ import { WidgetHeader } from "../components/widget-header"
 import { useEffect, useState } from "react"
 import { useAction, useMutation } from "convex/react"
 import { api } from "@workspace/backend/_generated/api"
-type InitStep = "storage" | "org" | "session" | "settings" | "vapi" | "done"
+
+
+type InitStep = "org" | "session" | "settings" | "vapi" | "done"
 
 export const WidgetLoadingScreen = ({ organizationId }: { organizationId: string | null }) => {
 
@@ -79,9 +81,7 @@ export const WidgetLoadingScreen = ({ organizationId }: { organizationId: string
 
         setLoadingMessage("Validating session ...")
 
-        validateContactSession({
-            contactSessionId,
-        })
+        validateContactSession({ contactSessionId })
             .then((result) => {
                 setSessionValid(result.valid)
                 setStep("done")
