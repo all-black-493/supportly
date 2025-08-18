@@ -17,8 +17,8 @@ export const WidgetLoadingScreen = ({ organizationId }: { organizationId: string
     const [sessionValid, setSessionValid] = useState(false)
 
     const loadingMessage = useAtomValue(loadingMessageAtom)
-    const setOrganizationId = useSetAtom(organizationIdAtom)
     const setLoadingMessage = useSetAtom(loadingMessageAtom)
+    const setOrganizationId = useSetAtom(organizationIdAtom)
     const setErrorMessage = useSetAtom(errorMessageAtom)
     const setScreen = useSetAtom(screenAtom)
 
