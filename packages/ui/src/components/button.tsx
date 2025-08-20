@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
         destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-red-500 text-white hover:bg-red-500/90 focus-visible:ring-destructive/20 dark:bg-red-500",
         outline:
           "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
@@ -20,7 +20,10 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
-        transparent: "bg-transparent text-primary-foreground hover:bg-transparent hover:text-primary-foreground/80"
+        transparent: "bg-transparent text-primary-foreground hover:bg-transparent hover:text-primary-foreground/80",
+        warning: "bg-gradient-to-b from-yellow-500 to-[#be8b00] text-white hover:to-[#be8b00]/90",
+        tertiary: "bg-gradient-to-b from-[#3FB62F] to-[#318d25] text-white hover:to-[#318d25]/90",
+
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
