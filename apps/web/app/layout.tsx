@@ -2,6 +2,7 @@ import { Outfit } from "next/font/google"
 import { ClerkProvider } from "@clerk/nextjs"
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
+import { Toaster } from "@workspace/ui/components/sonner"
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <ClerkProvider>
           <Providers>
+            <Toaster />
             {children}
           </Providers>
         </ClerkProvider>
