@@ -208,7 +208,7 @@ export const CustomizationForm = ({
                     disabled={form.formState.isSubmitting}
                     type="submit"
                     >
-                        <SaveIcon className="mr-2 h-4 w-4" />
+                        <SaveIcon className="h-4 w-4" />
                         Save Settings
                     </Button>
                 </div>
