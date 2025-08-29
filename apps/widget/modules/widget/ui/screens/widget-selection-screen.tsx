@@ -1,8 +1,8 @@
 "use client"
 
 import { useAtomValue, useSetAtom } from "jotai"
-import { AlertTriangleIcon, ChevronRightIcon, MessageSquareIcon, MessageSquareTextIcon } from "lucide-react"
-import { contactSessionIdAtomFamily, conversationIdAtom, errorMessageAtom, organizationIdAtom, screenAtom } from "../../atoms/widget-atoms"
+import { AlertTriangleIcon, ChevronRightIcon, MessageSquareIcon, MessageSquareTextIcon, MicIcon, PhoneIcon } from "lucide-react"
+import { contactSessionIdAtomFamily, conversationIdAtom, errorMessageAtom, hasVapiSecretsAtom, organizationIdAtom, screenAtom, widgetSettingsAtom } from "../../atoms/widget-atoms"
 import { WidgetHeader } from "../components/widget-header"
 import { Button } from "@workspace/ui/components/button"
 import { useMutation } from "convex/react"
@@ -14,41 +14,43 @@ export const WidgetSelectionScreen = () => {
 
     const setScreen = useSetAtom(screenAtom)
     const setErrorMessage = useSetAtom(errorMessageAtom)
-    const setConversationId=useSetAtom(conversationIdAtom)
+    const setConversationId = useSetAtom(conversationIdAtom)
 
+    const widgetSettings = useAtomValue(widgetSettingsAtom)
+    const hasVapiSecrets = useAtomValue(hasVapiSecretsAtom)
     const organizationId = useAtomValue(organizationIdAtom)
     const contactSessionId = useAtomValue(
         contactSessionIdAtomFamily(organizationId || "")
     )
 
     const createConversation = useMutation(api.public.conversations.create)
-    const [isPending, setIsPending]= useState(false)
+    const [isPending, setIsPending] = useState(false)
 
     const handleNewConversation = async () => {
 
-        if(!organizationId){
+        if (!organizationId) {
             setScreen("error")
             setErrorMessage("Missing Organization ID")
             return
         }
 
-        if(!contactSessionId){
+        if (!contactSessionId) {
             setScreen("auth")
             return
         }
 
         setIsPending(true)
 
-        try{
+        try {
             const conversationId = await createConversation({
                 contactSessionId,
                 organizationId,
             })
             setConversationId(conversationId)
             setScreen("chat")
-        }catch(auth){
+        } catch (auth) {
             setScreen("auth")
-        }finally{
+        } finally {
             setIsPending(false)
         }
 
@@ -80,6 +82,36 @@ export const WidgetSelectionScreen = () => {
                     </div>
                     <ChevronRightIcon />
                 </Button>
+
+                {hasVapiSecrets && widgetSettings?.vapiSettings?.assistantId && (
+                    <Button
+                        className="h-16 w-full justify-between"
+                        variant="outline"
+                        onClick={()=> setScreen("voice")}
+                        disabled={isPending}
+                    >
+                        <div className="flex items-center gap-x-2">
+                            <MicIcon className="size-4 " />
+                            <span>Start Audio Call</span>
+                        </div>
+                        <ChevronRightIcon />
+                    </Button>
+                )}
+
+                {hasVapiSecrets && widgetSettings?.vapiSettings?.phoneNumber && (
+                    <Button
+                        className="h-16 w-full justify-between"
+                        variant="outline"
+                        onClick={()=> setScreen("contact")}
+                        disabled={isPending}
+                    >
+                        <div className="flex items-center gap-x-2">
+                            <PhoneIcon className="size-4 " />
+                            <span>Call Us</span>
+                        </div>
+                        <ChevronRightIcon />
+                    </Button>
+                )}
             </div>
             <WidgetFooter />
         </>
