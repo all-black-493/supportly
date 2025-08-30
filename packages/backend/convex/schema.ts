@@ -5,7 +5,7 @@ export default defineSchema({
     widgetSettings: defineTable({
         organizationId: v.string(),
         greetMessage: v.string(),
-        defaultSuggestions:v.object({
+        defaultSuggestions: v.object({
             suggestion1: v.optional(v.string()),
             suggestion2: v.optional(v.string()),
             suggestion3: v.optional(v.string()),
@@ -15,7 +15,7 @@ export default defineSchema({
             phoneNumber: v.optional(v.string()),
         })
     })
-    .index("by_organization_id", ["organizationId"]),
+        .index("by_organization_id", ["organizationId"]),
     plugins: defineTable({
         organizationId: v.string(),
         service: v.union(v.literal("vapi")),
@@ -23,7 +23,7 @@ export default defineSchema({
     })
         .index("by_organization_id", ["organizationId"])
         .index("by_organization_id_and_service", ["organizationId", "service"]),
-        
+
     conversations: defineTable({
         threadId: v.string(),
         organizationId: v.string(),
