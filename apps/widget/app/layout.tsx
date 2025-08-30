@@ -20,7 +20,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="h-screen w-screen">
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   )
