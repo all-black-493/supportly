@@ -22,7 +22,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
-        <ClerkProvider>
+        <ClerkProvider
+        appearance={{
+          variables:{
+            colorPrimary:"#006239"
+          }
+        }}
+        >
           <Providers>
             <Toaster />
             {children}
