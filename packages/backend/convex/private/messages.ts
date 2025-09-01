@@ -9,10 +9,10 @@ import { google } from "@ai-sdk/google";
 import { OPERATOR_MESSAGE_ENHANCEMENT_PROMPT } from "../system/ai/constants";
 
 export const enhanceResponse = action({
-    args:{
-        prompt:v.string()
+    args: {
+        prompt: v.string()
     },
-    handler: async (ctx,args) =>{
+    handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity()
 
         if (identity === null) {
@@ -31,16 +31,30 @@ export const enhanceResponse = action({
             })
         }
 
+        const subscription = await ctx.runQuery(
+            internal.system.subscriptions.getByOrganizationId,
+            {
+                organizationId: orgId,
+            }
+        )
+
+        if (subscription?.status !== "active"){
+            throw new ConvexError({
+                code:"BAD_REQUEST",
+                message: "Missing subscription"
+            })
+        }
+
         const response = await generateText({
             model: google("gemini-1.5-flash-latest"),
             messages: [
                 {
-                    role:"system",
-                    content:OPERATOR_MESSAGE_ENHANCEMENT_PROMPT,
+                    role: "system",
+                    content: OPERATOR_MESSAGE_ENHANCEMENT_PROMPT,
                 },
                 {
-                    role:"user",
-                    content:args.prompt,
+                    role: "user",
+                    content: args.prompt,
                 }
             ]
         })
@@ -95,16 +109,16 @@ export const create = mutation({
             })
         }
 
-        if (conversation.status === "unresolved"){
+        if (conversation.status === "unresolved") {
             await ctx.db.patch(args.conversationId, {
                 status: "escalated"
             })
         }
 
-        await saveMessage(ctx, components.agent,{
+        await saveMessage(ctx, components.agent, {
             threadId: conversation.threadId,
             agentName: identity.familyName,
-            message:{
+            message: {
                 role: "assistant",
                 content: args.prompt,
             }
