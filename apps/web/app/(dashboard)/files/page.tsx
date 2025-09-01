@@ -1,11 +1,20 @@
+import { Protect } from '@clerk/nextjs'
+import { PremiumFeatureOverlay } from '@/modules/billing/ui/components/premium-feature-overlay'
 import { FilesView } from '@/modules/files/ui/views/files-view'
 import React from 'react'
 
 const FilesPage = () => {
   return (
-    <div>
+    <Protect
+      condition={(has) => has({ plan: "pro" })}
+      fallback={
+        <PremiumFeatureOverlay>
+          <FilesView />
+        </PremiumFeatureOverlay>
+      }
+    >
       <FilesView />
-    </div>
+    </Protect>
   )
 }
 
