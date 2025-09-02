@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supportly Widget Demo</title>
+
+  <!-- Import Outfit font -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Outfit', 'Segoe UI', Roboto, sans-serif;
+      padding: 40px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: 600;
+      margin-top: 0;
+    }
+
+    .controls {
+      margin-top: 30px;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: #006239;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: inherit;
+      transition: background 0.2s ease;
+    }
+
+    button:hover {
+      background: #004f2d;
+    }
+
+    pre {
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: 'Outfit', monospace;
+    }
+
+    .config-form {
+      margin-top: 20px;
+      padding: 20px;
+      background: #f8f8f8;
+      border-radius: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Supportly Widget Demo</h1>
+    <p>This page demonstrates how to embed the Supportly customer-support widget on your website.</p>
+
+    <h2>Basic Usage</h2>
+    <pre><code>&lt;script src="https://your-domain.com/widget.js" 
+        data-organization-id="<span id="example-org-id">org_31NU6YYcWfwDlDjqJz24oNGyrLE</span>"&gt;
+&lt;/script&gt;</code></pre>
+
+    <div class="config-form">
+      <h3>Configuration</h3>
+      <div class="form-group">
+        <label for="orgId">Organization ID:</label>
+        <input type="text" id="orgId" placeholder="Enter your organization ID" value="">
+      </div>
+      <div class="form-group">
+        <label for="position">Position:</label>
+        <select id="position">
+          <option value="bottom-right">Bottom Right</option>
+          <option value="bottom-left">Bottom Left</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="initWidget()">Initialize Widget</button>
+      <button onclick="showWidget()">Show Widget</button>
+      <button onclick="hideWidget()">Hide Widget</button>
+      <button onclick="destroyWidget()">Destroy Widget</button>
+    </div>
+  </div>
+
+  <!-- Load the widget with default config -->
+  <script type="module" src="/embed.ts" data-organization-id="org_31NU6YYcWfwDlDjqJz24oNGyrLE"></script>
+
+  <script type="module">
+    import { EMBED_CONFIG } from './config.ts';
+
+    // Set display values on load
+    document.getElementById('example-org-id').textContent = EMBED_CONFIG.DEFAULT_ORG_ID;
+    document.getElementById('orgId').value = EMBED_CONFIG.DEFAULT_ORG_ID;
+
+    window.initWidget = function () {
+      const config = {
+        organizationId: document.getElementById('orgId').value || EMBED_CONFIG.DEFAULT_ORG_ID,
+        position: document.getElementById('position').value
+      };
+
+      if (window.SupportlyWidget) {
+        window.SupportlyWidget.init(config);
+        console.log('Widget reinitialized with config:', config);
+      }
+    }
+
+    window.showWidget = function () {
+      if (window.SupportlyWidget) {
+        window.SupportlyWidget.show();
+      } else {
+        alert('Please initialize the widget first');
+      }
+    }
+
+    window.hideWidget = function () {
+      if (window.SupportlyWidget) {
+        window.SupportlyWidget.hide();
+      }
+    }
+
+    window.destroyWidget = function () {
+      if (window.SupportlyWidget) {
+        window.SupportlyWidget.destroy();
+        console.log('Widget destroyed');
+      }
+    }
+  </script>
+</body>
+
+</html>
