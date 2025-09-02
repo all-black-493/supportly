@@ -1,14 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supportly</title>
+  
+  <!-- Outfit font -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    :root {
+      --color-primary: #006239;
+      --color-background: #f9fafb;
+      --color-text: #1f2937;
+      --color-accent: #00c97e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f9fafb 0%, #e6f4ef 100%);
+      color: var(--color-text);
+      font-family: 'Outfit', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      position: relative;
+      text-align: center;
+    }
+
+    /* Floating decorative shape */
+    header::before {
+      content: "";
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0,98,57,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px); }
+      to   { transform: translateY(20px); }
+    }
+
+    header img {
+      max-width: 180px;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 1.2s ease forwards;
+    }
+
+    p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 1.6s ease forwards;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 8px 16px rgba(0, 98, 57, 0.25);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      animation: fadeInUp 2s ease forwards;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      background: var(--color-accent);
+      box-shadow: 0 12px 24px rgba(0, 98, 57, 0.35);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #widget-container {
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    footer {
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6b7280;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    footer a {
+      color: var(--color-primary);
+      text-decoration: none;
+      margin: 0 0.5rem;
+      transition: color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: var(--color-accent);
+    }
+  </style>
 </head>
-
 <body>
-    <script src="http://localhost:3001/widget.js" data-organization-id="org_31NU6YYcWfwDlDjqJz24oNGyrLE"></script>
-</body>
+  <header>
+    <img src="/apps/web/public/logo.svg" alt="Supportly Logo" />
+    <h1>Supportly</h1>
+    <p>Deliver effortless customer support. A beautiful widget that fits right into your product — simple, fast, and human.</p>
+    <a href="http://localhost:3000/sign-up" class="btn">Launch Demo</a>
+  </header>
 
+  <div id="widget-container">
+    <script src="http://localhost:3001/widget.js"
+            data-organization-id="org_31NU6YYcWfwDlDjqJz24oNGyrLE">
+    </script>
+  </div>
+
+  <footer>
+    © 2025 Supportly — <a href="#">Twitter</a> • <a href="#">LinkedIn</a>
+  </footer>
+</body>
 </html>
