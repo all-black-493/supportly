@@ -21,17 +21,17 @@ import { createScript } from "../../utils"
 
 export const IntegrationsView = () => {
 
-    const [dialogOpen, setDialogOpen]= useState(false)
+    const [dialogOpen, setDialogOpen] = useState(false)
     const [selectedSnippet, setSelectedSnippet] = useState("")
     const { organization } = useOrganization()
 
-    const handleIntegrationClick = (integrationId: IntegrationId)=>{
-        if(!organization){
+    const handleIntegrationClick = (integrationId: IntegrationId) => {
+        if (!organization) {
             toast.error("Organization ID not found")
             return;
         }
 
-        const snippet =  createScript(integrationId, organization.id)
+        const snippet = createScript(integrationId, organization.id)
         setSelectedSnippet(snippet)
         setDialogOpen(true)
     }
