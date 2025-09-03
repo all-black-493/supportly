@@ -31,7 +31,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
 
     // Exit if no organization ID
     if (!organizationId) {
-        console.error('Echo Widget: data-organization-id attribute is required');
+        console.error('Supportly Widget: data-organization-id attribute is required');
         return;
     }
 
@@ -46,7 +46,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
     function render() {
         // Create floating action button
         button = document.createElement('button');
-        button.id = 'echo-widget-button';
+        button.id = 'supportly-widget-button';
         button.innerHTML = chatBubbleIcon;
         button.style.cssText = `
       position: fixed;
@@ -79,7 +79,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
 
         // Create container (hidden by default)
         container = document.createElement('div');
-        container.id = 'echo-widget-container';
+        container.id = 'supportly-widget-container';
         container.style.cssText = `
       position: fixed;
       ${position === 'bottom-right' ? 'right: 20px;' : 'left: 20px;'}
