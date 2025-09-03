@@ -210,7 +210,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
     }
 
     // Expose API to global scope
-    (window as any).EchoWidget = {
+    (window as any).SupportlyWidget = {
         init: reinit,
         show,
         hide,
