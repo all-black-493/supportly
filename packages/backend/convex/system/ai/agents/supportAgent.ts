@@ -4,7 +4,7 @@ import { components } from "../../../_generated/api"
 import { SUPPORT_AGENT_PROMPT } from "../constants";
 
 export const supportAgent = new Agent(components.agent,{
-    chat:google.chat("gemini-1.5-flash"),
+    chat:google.chat("gemini-2.5-flash"),
     instructions:SUPPORT_AGENT_PROMPT,
     
 })
