@@ -1,31 +1,55 @@
-# shadcn/ui monorepo template
+# 🧠 Supportly — AI-Powered Customer Support Platform
 
-This template is for creating a monorepo with shadcn/ui.
+Supportly is a production-ready, full-stack AI customer support SaaS built with Next.js and React. It features real-time AI chat, voice support, smart knowledge base with RAG, human handoff logic, multi-tenant workspaces, authentication, billing, and a developer-friendly embeddable widget.
 
-## Usage
+🚀 Live Demo for the Tenant side: https://supportly-web.vercel.app
+🚀 Live Demo for the Browser Client side: https://supportly-web.vercel.app
+
+---
+
+## 📸 Screenshots
+
+### Tenant Dashboard  
+![Tenant Dashboard](path/to/tenant-screenshot.png)
+
+### Client Chat Widget  
+![Client Chat Widget](path/to/client-screenshot.png)
+
+---
+
+## 🧩 Features
+
+- 🤖 **Real-time AI Chat** using Convex Agents  
+- 🔊 **Voice Support** via VAPI for real-time voice interaction  
+- 🧠 **Smart Knowledge Base** with uploaded docs + embeddings + RAG  
+- 📣 **Human Handoff & Auto-Close** logic to route conversations  
+- 👥 **Multi-Tenant Workspaces & Team Management**  
+- 🔐 **Authentication & Billing** using Clerk  
+- 🔑 **Secure API Key Storage** with AWS Secrets Manager  
+- 🛠️ **Embeddable Developer Chat Widget**  
+- 📈 **Operator Dashboard** for managing conversations  
+- 🧰 **Developer Toolkit** for easy embed/script setup  
+- 🧠 **AI Model Support** — OpenAI, Anthropic, Grok
+
+---
+
+## 🚀 Tech Stack
+
+- **Framework:** Next.js 15  
+- **Frontend:** React 19, Tailwind CSS v4  
+- **Backend & Data:** Convex Agents, Embeddings & RAG  
+- **Authentication & Billing:** Clerk  
+- **Voice API:** VAPI  
+- **Error Tracking:** Sentry  
+- **Monorepo:** Turborepo  
+- **UI Components:** shadcn/ui
+
+---
+
+## 🛠️ Installation
+
+1. Clone the repo
 
 ```bash
-pnpm dlx shadcn@latest init
-```
-
-## Adding components
-
-To add components to your app, run the following command at the root of your `web` app:
-
-```bash
-pnpm dlx shadcn@latest add button -c apps/web
-```
-
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Tailwind
-
-Your `tailwind.config.ts` and `globals.css` are already set up to use the components from the `ui` package.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button"
-```
+git clone https://github.com/all-black-493/supportly.git
+cd supportly
