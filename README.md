@@ -53,3 +53,42 @@ Supportly is a production-ready, full-stack AI customer support SaaS built with 
 ```bash
 git clone https://github.com/all-black-493/supportly.git
 cd supportly
+```
+
+2. Install dependencies
+
+```bash
+pnpm install
+```
+
+## ⚙️ Configuration
+
+Create a .env.local file in the root directory and add your environment variables:
+
+```bash
+NEXT_PUBLIC_CONVEX_URL=your_convex_url
+VAPI_API_KEY=your_vapi_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret
+CLERK_JWT_KEY=your_clerk_jwt_key
+SENTRY_DSN=your_sentry_dsn
+# …other required variables
+```
+
+Replace placeholder values with actual API keys/secrets before running.
+
+## 📦 Usage
+
+🧪 Run in Development
+
+```bash
+pnpm dev
+```
+
+Visit:
+
+```bash
+http://localhost:3000
+```
+
+Use sample tenant/admin accounts or create your own with the in‑app signup.
+
