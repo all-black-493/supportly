@@ -3,17 +3,34 @@
 Supportly is a production-ready, full-stack AI customer support SaaS built with Next.js and React. It features real-time AI chat, voice support, smart knowledge base with RAG, human handoff logic, multi-tenant workspaces, authentication, billing, and a developer-friendly embeddable widget.
 
 🚀 Live Demo for the Tenant side: https://supportly-web.vercel.app
+
 🚀 Live Demo for the Browser Client side: https://supportly-web.vercel.app
 
 ---
 
 ## 📸 Screenshots
 
-### Tenant Dashboard  
-![Tenant Dashboard](path/to/tenant-screenshot.png)
+### A Demo Landing Page  
+![Landing Page Demo](apps/web/public/Supportly/landing_page.jpeg)
 
 ### Client Chat Widget  
-![Client Chat Widget](path/to/client-screenshot.png)
+![Client Chat Widget](apps/web/public/Supportly/sample_chat.jpeg)
+
+### Customize your Widget
+![Open Widget](apps/web/public/Supportly/demo_widget_open.jpeg)
+
+### 🗨️ Tenant Conversations View  
+![Tenant Conversations](apps/web/public/Supportly/tenant_conversations.jpeg)
+
+### 📚 Knowledge Base UI  
+![Knowledge Base](apps/web/public/Supportly/tenant_knowledge_base.jpeg)
+
+### 💳 Tenant Billing  
+![Tenant Billing](apps/web/public/Supportly/tenant_billing.jpeg)
+
+### 🛠 Tenant Customization  
+![Tenant Customization](apps/web/public/Supportly/tenant_customization.jpeg)
+
 
 ---
 
